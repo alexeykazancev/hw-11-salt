@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "vm" {
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = file("~/.ssh/id_rsa.pub")
+    private_key = file("~/.ssh/id_rsa")
     host        = self.default_ipv4_address
   }
 

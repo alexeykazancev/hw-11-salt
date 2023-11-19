@@ -1,3 +1,4 @@
+.terraform.lock.hcl
 .terraform
 .vagrant
 .terraform.tfstate.lock.info
