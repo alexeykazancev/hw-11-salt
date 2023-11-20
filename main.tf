@@ -48,20 +48,22 @@ resource "proxmox_vm_qemu" "vm" {
   balloon = 0
   onboot  = false
 
-  connection {
+  
+
+  provisioner "remote-exec" {
+    connection {
     type        = "ssh"
     user        = "root"
     private_key = file("~/.ssh/id_rsa")
     host        = self.default_ipv4_address
   }
-
-  provisioner "remote-exec" {
+    
     inline = [
       "export http_proxy=http://192.168.152.9:3128",
       "export https_proxy=http://192.168.152.9:3128",
       "mkdir /etc/apt/keyrings",
       "apt update",
-      "apt install -y curl wget",
+      "apt install -y curl wget mc sudo atop htop",
       "curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/debian/11/amd64/SALT-PROJECT-GPG-PUBKEY-2023.gpg",
       "echo deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/11/amd64/latest bullseye main | tee /etc/apt/sources.list.d/salt.list",
       "apt update",
@@ -72,6 +74,29 @@ resource "proxmox_vm_qemu" "vm" {
     ]
   }
 
+  provisioner "remote-exec" {
+    connection {
+    type        = "ssh"
+    user        = "root"
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.default_ipv4_address
+  }
+    
+    inline = [
+      "export http_proxy=http://192.168.152.9:3128",
+      "export https_proxy=http://192.168.152.9:3128",
+      "mkdir /etc/apt/keyrings",
+      "apt update",
+      "apt install -y curl wget mc sudo atop htop",
+      "curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/debian/11/amd64/SALT-PROJECT-GPG-PUBKEY-2023.gpg",
+      "echo deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/11/amd64/latest bullseye main | tee /etc/apt/sources.list.d/salt.list",
+      "apt update",
+      "apt install -y salt-minion salt-ssh salt-syndic salt-cloud salt-api",
+      "systemctl enable salt-minion && systemctl start salt-minion",
+      "systemctl enable salt-syndic && systemctl start salt-syndic",
+      "systemctl enable salt-api && systemctl start salt-api",
+    ]
+  }
 
   lifecycle {
     ignore_changes = [
