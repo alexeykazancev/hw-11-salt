@@ -34,7 +34,7 @@ variable "pm_target_node_name" {
 
 variable "vm_count" {
   description = "Count of VM"
-  default     = 2
+  default     = 1
 }
 
 variable "vm_template" {
