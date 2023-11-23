@@ -1,4 +1,4 @@
-resource "proxmox_vm_qemu" "vm0" {
+resource "proxmox_vm_qemu" "salt-server" {
   count       = var.vm_count
   name        = "${var.vm_prefix0}-${count.index}"
   desc        = "VM ${var.vm_prefix0}-${count.index}"
@@ -48,14 +48,15 @@ resource "proxmox_vm_qemu" "vm0" {
   balloon = 0
   onboot  = false
 
-  provisioner "remote-exec" {
-    connection {
+  connection {
     type        = "ssh"
     user        = "root"
     private_key = file("~/.ssh/id_rsa")
     host        = self.default_ipv4_address
   }
-    
+
+  provisioner "remote-exec" {
+        
     inline = [
       "export http_proxy=http://192.168.152.9:3128",
       "export https_proxy=http://192.168.152.9:3128",
@@ -79,7 +80,7 @@ resource "proxmox_vm_qemu" "vm0" {
 }
 
 
-resource "proxmox_vm_qemu" "vm1" {
+resource "proxmox_vm_qemu" "salt-minion" {
   count       = var.vm_count
   name        = "${var.vm_prefix1}-${count.index}"
   desc        = "VM ${var.vm_prefix1}-${count.index}"
@@ -127,17 +128,17 @@ resource "proxmox_vm_qemu" "vm1" {
 
   agent   = 1
   balloon = 0
-  onboot  = false  
-  
-  
-  provisioner "remote-exec" {
-    connection {
+  onboot  = false
+
+  connection {
     type        = "ssh"
     user        = "root"
     private_key = file("~/.ssh/id_rsa")
     host        = self.default_ipv4_address
   }
-    
+  
+  provisioner "remote-exec" {
+        
     inline = [
       "export http_proxy=http://192.168.152.9:3128",
       "export https_proxy=http://192.168.152.9:3128",
