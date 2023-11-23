@@ -1,7 +1,7 @@
 resource "proxmox_vm_qemu" "salt-server" {
   count       = var.vm_count
-  name        = "${var.vm_name_prefix0}-${count.index}"
-  desc        = "VM ${var.vm_name_prefix0}-${count.index}"
+  name        = "salt-server-${count.index}"
+  desc        = "VM salt-server-${count.index}"
   target_node = var.pm_target_node_name
 
   kvm = true
@@ -82,8 +82,8 @@ resource "proxmox_vm_qemu" "salt-server" {
 
 resource "proxmox_vm_qemu" "salt-minion" {
   count       = var.vm_count
-  name        = "${var.vm_name_prefix1}-${count.index}"
-  desc        = "VM ${var.vm_name_prefix1}-${count.index}"
+  name        = "$salt-minion-${count.index}"
+  desc        = "VM salt-minion-${count.index}"
   target_node = var.pm_target_node_name
 
   kvm = true
@@ -124,7 +124,7 @@ resource "proxmox_vm_qemu" "salt-minion" {
 
   nameserver   = var.vm_ip_dns
   searchdomain = var.vm_searchdomain
-  ipconfig0    = "ip=${var.vm_ip_network}${count.index + var.vm_ip_network_start}/${var.vm_ip_cidr},gw=${var.vm_ip_gateway}"
+  ipconfig0    = "ip=${var.vm_ip_network}${count.index + 1 + var.vm_ip_network_start}/${var.vm_ip_cidr},gw=${var.vm_ip_gateway}"
 
   agent   = 1
   balloon = 0
