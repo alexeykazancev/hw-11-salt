@@ -1,7 +1,7 @@
 resource "proxmox_vm_qemu" "salt-server" {
   count       = var.vm_count
-  name        = "${var.vm_prefix1}-${count.index}"
-  desc        = "VM ${var.vm_prefix1}-${count.index}"
+  name        = "${var.vm_name_prefix0}-${count.index}"
+  desc        = "VM ${var.vm_name_prefix0}-${count.index}"
   target_node = var.pm_target_node_name
 
   kvm = true
@@ -82,8 +82,8 @@ resource "proxmox_vm_qemu" "salt-server" {
 
 resource "proxmox_vm_qemu" "salt-minion" {
   count       = var.vm_count
-  name        = "${var.vm_prefix1}-${count.index}"
-  desc        = "VM ${var.vm_prefix1}-${count.index}"
+  name        = "${var.vm_name_prefix1}-${count.index}"
+  desc        = "VM ${var.vm_name_prefix1}-${count.index}"
   target_node = var.pm_target_node_name
 
   kvm = true

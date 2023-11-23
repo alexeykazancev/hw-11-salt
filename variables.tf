@@ -41,12 +41,12 @@ variable "vm_template" {
   description = "Template for cloning"
 }
 
-variable "vm_prefix0" {
+variable "vm_name_prefix0" {
   description = "Prefix for VM name"
   default     = "prefix"
 }
 
-variable "vm_prefix1" {
+variable "vm_name_prefix1" {
   description = "Prefix for VM name"
   default     = "prefix"
 }
