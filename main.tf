@@ -148,10 +148,8 @@ resource "proxmox_vm_qemu" "salt-minion" {
       "curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/debian/11/amd64/SALT-PROJECT-GPG-PUBKEY-2023.gpg",
       "echo deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/11/amd64/latest bullseye main | tee /etc/apt/sources.list.d/salt.list",
       "apt update",
-      "apt install -y salt-minion salt-ssh salt-syndic salt-cloud salt-api",
+      "apt install -y salt-minion salt-ssh",
       "systemctl enable salt-minion && systemctl start salt-minion",
-      "systemctl enable salt-syndic && systemctl start salt-syndic",
-      "systemctl enable salt-api && systemctl start salt-api",
     ]
   }
 
