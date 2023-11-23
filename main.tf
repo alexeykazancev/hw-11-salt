@@ -82,7 +82,7 @@ resource "proxmox_vm_qemu" "salt-server" {
 
 resource "proxmox_vm_qemu" "salt-minion" {
   count       = var.vm_count
-  name        = "$salt-minion-${count.index}"
+  name        = "salt-minion-${count.index}"
   desc        = "VM salt-minion-${count.index}"
   target_node = var.pm_target_node_name
 
