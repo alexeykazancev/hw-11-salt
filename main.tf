@@ -67,7 +67,7 @@ resource "proxmox_vm_qemu" "salt-server" {
       "echo deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/11/amd64/latest bullseye main | tee /etc/apt/sources.list.d/salt.list",
       "apt update",
       "apt install -y salt-master salt-ssh salt-syndic salt-cloud salt-api",
-      "echo interface: ${proxmox_vm_qemu.salt-server.*.ssh_host} >> /etc/salt/master",
+      "echo interface: 10.128.64.162 >> /etc/salt/master",
       "systemctl enable salt-master && systemctl start salt-master",
       "systemctl enable salt-syndic && systemctl start salt-syndic",
       "systemctl enable salt-api && systemctl start salt-api",
